@@ -1,0 +1,47 @@
+Port: 8080
+
+Redis:
+  Addr: "127.0.0.1:6379"
+
+Mysql:
+  - DSNTemplate: "%s:%s@tcp(%s)/%s?timeout=%s&readTimeout=%s&writeTimeout=%s&parseTime=True&interpolateParams=True&loc=Local&autocommit=true"
+    Username: "test_write"
+    Password: "000000"
+    DBName: "accounts"
+    Address: "localhost:3306"
+    ConsulName: ""
+    Timeout: "10000ms"
+    ReadTimeout: "1s"
+    WriteTimeout: "2s"
+    MaxIdle: 20
+    MaxOpen: 100
+    IsMaster: true
+  - DSNTemplate: "%s:%s@tcp(%s)/%s?timeout=%s&readTimeout=%s&writeTimeout=%s&parseTime=True&interpolateParams=True&loc=Local&autocommit=true"
+    Username: "test_read"
+    Password: "000000"
+    DBName: "accounts"
+    Address: "localhost:3306"
+    ConsulName: ""
+    Timeout: "10000ms"
+    ReadTimeout: "1s"
+    WriteTimeout: "2s"
+    MaxIdle: 20
+    MaxOpen: 100
+    IsMaster: false
+
+Nebular:
+  Address: "127.0.0.1"
+  Port: 3699
+  Username: "root"
+  Password: "888888"
+  Space: "test_space_1"
+
+ESConfig:
+  Address:
+    - "http://0.0.0.0:9200"
+    - "http://0.0.0.0:9300"
+
+OSSConfig:
+  Endpoint: "oss-cn-beijing.aliyuncs.com"
+  AccessKeyID: "LTAI4GEvmtMwZsaD7ph4tPrZ"
+  AccessKeySecret: "A5QAha0FzO8yXis60HaXWer42WASgw"
