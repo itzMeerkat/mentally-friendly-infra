@@ -6,7 +6,7 @@ import (
 	"gorm.io/plugin/dbresolver"
 )
 
-func InitMysqlClient(masterDSN string, slavesDSN []string) (*gorm.DB, error) {
+func InitMysqlClient(masterDSN string, slavesDSN []string) *gorm.DB {
 	master := mysql.Open(masterDSN)
 	var slaves []gorm.Dialector
 	for _,v := range slavesDSN {
@@ -15,7 +15,7 @@ func InitMysqlClient(masterDSN string, slavesDSN []string) (*gorm.DB, error) {
 
 	db, err := gorm.Open(master, &gorm.Config{})
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
 	err = db.Use(dbresolver.Register(dbresolver.Config{
@@ -24,7 +24,7 @@ func InitMysqlClient(masterDSN string, slavesDSN []string) (*gorm.DB, error) {
 		Policy: dbresolver.RandomPolicy{},
 	}))
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
-	return db, nil
+	return db
 }

@@ -9,10 +9,9 @@ type Logger interface {
 	Debugf(string, ...interface{})
 }
 
-var IsGlobal bool
 var globalLogger Logger
 
-func InitZapSugared(global bool, production bool) (*zap.SugaredLogger, error) {
+func InitZapSugared(global bool, production bool) *zap.SugaredLogger {
 	var p *zap.Logger
 	var err error
 	if production == true {
@@ -21,16 +20,14 @@ func InitZapSugared(global bool, production bool) (*zap.SugaredLogger, error) {
 		p, err = zap.NewDevelopment(zap.AddCallerSkip(1))
 	}
 	if err != nil {
-		return nil, err
+		panic(err)
 	}
 
 	if global {
-		IsGlobal = true
 		globalLogger = p.Sugar()
-		return nil, nil
+		return nil
 	} else {
-		IsGlobal = false
-		return p.Sugar(), nil
+		return p.Sugar()
 	}
 }
 

@@ -5,17 +5,15 @@ import (
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
 )
-func LoadConfigs(path string, target interface{}) error {
+func LoadConfigs(path string, target interface{}) {
 	log.Infof("Loading configs from %s", path)
 	f, err := ioutil.ReadFile(path)
 	if err != nil {
-		return err
+		panic(err)
 	}
 
 	err = yaml.Unmarshal(f, target)
 	if err != nil {
-		return err
+		panic(err)
 	}
-
-	return nil
 }
