@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
+	"gitee.com/infra/log"
 	"gitee.com/infra/util"
-	"go.uber.org/zap"
 	"strings"
 	"testing"
 )
@@ -92,11 +92,10 @@ type Config struct {
 
 
 func TestLoadConfigs(t *testing.T) {
-	z, _ := zap.NewProduction()
-	logger := z.Sugar()
 
+	log.InitZapSugared(true, false)
 	AppConfig := Config{}
 
-	LoadConfigs(logger, "./test_conf/test1.yml", &AppConfig)
+	LoadConfigs("./test_conf/test1.yml", &AppConfig)
 	fmt.Println(util.Render(AppConfig))
 }
