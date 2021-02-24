@@ -9,7 +9,7 @@ type Logger interface {
 	Debugf(string, ...interface{})
 }
 
-var globalLogger Logger
+var GlobalLogger Logger
 
 func InitZapSugared(global bool, production bool) *zap.SugaredLogger {
 	var p *zap.Logger
@@ -24,7 +24,7 @@ func InitZapSugared(global bool, production bool) *zap.SugaredLogger {
 	}
 
 	if global {
-		globalLogger = p.Sugar()
+		GlobalLogger = p.Sugar()
 		return nil
 	} else {
 		return p.Sugar()
@@ -32,14 +32,14 @@ func InitZapSugared(global bool, production bool) *zap.SugaredLogger {
 }
 
 func Infof(t string, args ...interface{}) {
-	globalLogger.Infof(t, args)
+	GlobalLogger.Infof(t, args)
 }
 func Warnf(t string, args ...interface{}) {
-	globalLogger.Warnf(t, args)
+	GlobalLogger.Warnf(t, args)
 }
 func Errorf(t string, args ...interface{}) {
-	globalLogger.Errorf(t, args)
+	GlobalLogger.Errorf(t, args)
 }
 func Debugf(t string, args ...interface{}) {
-	globalLogger.Debugf(t, args)
+	GlobalLogger.Debugf(t, args)
 }
