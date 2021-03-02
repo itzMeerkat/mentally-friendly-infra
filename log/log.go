@@ -7,17 +7,21 @@ type Logger interface {
 	Warnf(string, ...interface{})
 	Errorf(string, ...interface{})
 	Debugf(string, ...interface{})
+	Infow(string, ...interface{})
+	Warnw(string, ...interface{})
+	Errorw(string, ...interface{})
+	Debugw(string, ...interface{})
 }
 
 var GlobalLogger Logger
 
-func InitZapSugared(global bool, production bool) *zap.SugaredLogger {
+func InitZapSugared(global bool, production bool, skip int) *zap.SugaredLogger {
 	var p *zap.Logger
 	var err error
 	if production == true {
-		p, err = zap.NewProduction(zap.AddCallerSkip(1))
+		p, err = zap.NewProduction(zap.AddCallerSkip(skip))
 	} else {
-		p, err = zap.NewDevelopment(zap.AddCallerSkip(1))
+		p, err = zap.NewDevelopment(zap.AddCallerSkip(skip))
 	}
 	if err != nil {
 		panic(err)
@@ -42,4 +46,17 @@ func Errorf(t string, args ...interface{}) {
 }
 func Debugf(t string, args ...interface{}) {
 	GlobalLogger.Debugf(t, args)
+}
+
+func Infow(msg string, args ...interface{}) {
+	GlobalLogger.Infow(msg, args...)
+}
+func Warnw(msg string, args ...interface{}) {
+	GlobalLogger.Warnw(msg, args...)
+}
+func Errorw(msg string, args ...interface{}) {
+	GlobalLogger.Errorw(msg, args...)
+}
+func Debugw(msg string, args ...interface{}) {
+	GlobalLogger.Debugw(msg, args...)
 }

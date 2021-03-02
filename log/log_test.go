@@ -6,8 +6,8 @@ import (
 )
 
 func TestBasic(t *testing.T) {
-	InitZapSugared(true, false)
-	Infof("Logging test ! %s !", "Let's see")
+	l := InitZapSugared(false, true, 1)
+	l.Infow("k1",1, "k2",2)
 }
 
 func TestGetLogID(t *testing.T) {
