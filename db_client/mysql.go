@@ -1,10 +1,17 @@
-package mysql_client
+package db_client
 
 import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"gorm.io/plugin/dbresolver"
 )
+
+func InitDatabaseClient(masterDSN string, slaveSDNs []string, dbType string) *gorm.DB {
+	if dbType == "mysql" {
+		return InitMysqlClient(masterDSN, slaveSDNs)
+	}
+	panic("unknown database type")
+}
 
 func InitMysqlClient(masterDSN string, slavesDSN []string) *gorm.DB {
 	master := mysql.Open(masterDSN)
