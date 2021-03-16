@@ -2,8 +2,8 @@ package config
 
 import (
 	"fmt"
-	"gitee.com/infra/log"
-	"gitee.com/infra/util"
+	jsoniter "github.com/json-iterator/go"
+	"os"
 	"strings"
 	"testing"
 )
@@ -92,10 +92,33 @@ type Config struct {
 
 
 func TestLoadConfigs(t *testing.T) {
-
-	log.InitZapSugared(true, false)
 	AppConfig := Config{}
 
-	LoadConfigs("./test_conf/test1.yml", &AppConfig)
-	fmt.Println(util.Render(AppConfig))
+	LoadConfigFile("./test_conf/test1.yml", &AppConfig)
+	fmt.Println(Render(AppConfig))
+}
+
+func TestLoadEnvVar(t *testing.T) {
+	os.Setenv("TEST_ENV1", "1")
+	os.Setenv("TEST_ENV2", "22")
+	//os.Setenv("TEST_ENV3", "333")
+
+	type EnvConf struct {
+		TEST_ENV1 string
+		TEST_ENV2 string
+		TEST_ENV3 string
+	}
+	envConf := EnvConf{}
+
+	LoadEnvVar(&envConf)
+	fmt.Println(Render(envConf))
+
+}
+
+func Render(obj interface{}) string {
+	s, err := jsoniter.Marshal(obj)
+	if err != nil {
+		return ""
+	}
+	return string(s)
 }

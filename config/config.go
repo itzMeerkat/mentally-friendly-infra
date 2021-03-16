@@ -1,12 +1,12 @@
 package config
 
 import (
-	"gitee.com/infra/log"
 	"gopkg.in/yaml.v3"
 	"io/ioutil"
+	"os"
+	"reflect"
 )
-func LoadConfigs(path string, target interface{}) {
-	log.Infof("Loading configs from %s", path)
+func LoadConfigFile(path string, target interface{}) {
 	f, err := ioutil.ReadFile(path)
 	if err != nil {
 		panic(err)
@@ -15,5 +15,15 @@ func LoadConfigs(path string, target interface{}) {
 	err = yaml.Unmarshal(f, target)
 	if err != nil {
 		panic(err)
+	}
+}
+
+func LoadEnvVar(target interface{}) {
+	targetType := reflect.TypeOf(target).Elem()
+	fieldNum := targetType.NumField()
+	for i:=0;i<fieldNum;i++ {
+		fieldName := targetType.Field(i).Name
+		val := os.Getenv(fieldName)
+		reflect.ValueOf(target).Elem().Field(i).SetString(val)
 	}
 }

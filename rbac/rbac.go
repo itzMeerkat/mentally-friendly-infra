@@ -4,10 +4,6 @@ import (
 	"github.com/casbin/casbin/v2"
 )
 
-type AccessControl interface {
-	GetAction() (string, string, string)
-}
-
 var enforcer *casbin.Enforcer
 
 func InitRbacEnforcer(confPath string, csvPath string) {
@@ -18,8 +14,7 @@ func InitRbacEnforcer(confPath string, csvPath string) {
 	}
 }
 
-func CheckAccess(d AccessControl) bool {
-	sub, obj, act := d.GetAction()
+func CheckAccess(sub,obj,act string) bool {
 	ok, err := enforcer.Enforce(sub, obj, act)
 	if err != nil {
 		panic(err)
