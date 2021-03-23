@@ -6,6 +6,7 @@ import (
 	"os"
 	"reflect"
 )
+
 func LoadConfigFile(path string, target interface{}) {
 	f, err := ioutil.ReadFile(path)
 	if err != nil {
