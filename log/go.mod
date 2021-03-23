@@ -1,4 +1,4 @@
-module gitee.com/fat_marmota/infra/log
+module github.com/itzmeerkat/mentally-friendly-infra/log
 
 go 1.15
 

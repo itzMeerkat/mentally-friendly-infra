@@ -1,4 +1,4 @@
-module gitee.com/fat_marmota/infra/mysql_client
+module github.com/itzmeerkat/mentally-friendly-infra/db_client
 
 go 1.15
 
