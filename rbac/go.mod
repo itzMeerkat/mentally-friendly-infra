@@ -1,4 +1,4 @@
-module gitee.com/fat_marmota/infra/rbac
+module github.com/itzmeerkat/mentally-friendly-infra/rbac
 
 go 1.15
 
